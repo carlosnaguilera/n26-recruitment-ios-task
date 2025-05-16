@@ -1,0 +1,50 @@
+{
+  "configurations" : [
+    {
+      "id" : "41065472-F7F0-4711-9343-3BE1D9F992B1",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:iOS task.xcodeproj",
+      "identifier" : "FD06526F2CEF759500376B5E",
+      "name" : "iOS task"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features\/Assets",
+        "identifier" : "AssetsTests",
+        "name" : "AssetsTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Data",
+        "identifier" : "DataTests",
+        "name" : "DataTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Domain",
+        "identifier" : "DomainTests",
+        "name" : "DomainTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:iOS task.xcodeproj",
+        "identifier" : "077539EC2DAEBF9D001DF2B4",
+        "name" : "iOS taskTests"
+      }
+    }
+  ],
+  "version" : 1
+}
