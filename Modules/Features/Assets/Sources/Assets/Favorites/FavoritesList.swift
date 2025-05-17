@@ -13,11 +13,12 @@ struct FavoritesList: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             StatefulView(state: viewModel.state, content: favoritesList)
             .listStyle(.plain)
             .navigationTitle(Strings.title)
         }
+        .navigationViewStyle(.stack)
         .task  { try? await viewModel.onAppear() }
     }
     
