@@ -13,7 +13,7 @@ public actor InMemoryAssetService: InMemoryAssetRepository {
         storage = assets
     }
     
-    public func getAsset(id: String) async throws(InMemmoryAssetRepositoryError) -> Asset {
+    public func getAsset(id: String) async throws(InMemoryAssetRepositoryError) -> Asset {
         
         guard let asset = storage.first(where: { $0.id == id } ) else { throw .notFound }
             

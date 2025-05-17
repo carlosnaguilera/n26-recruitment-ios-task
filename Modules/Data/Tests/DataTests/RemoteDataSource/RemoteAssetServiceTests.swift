@@ -90,8 +90,8 @@ private final class MockInMemoryAssetRepository: InMemoryAssetRepository, @unche
         savedAssets = assets
     }
     func getAllAssets() async -> [Asset] { [] }
-    func getAsset(id: String) async throws(InMemmoryAssetRepositoryError) -> Asset {
-        throw InMemmoryAssetRepositoryError.notFound
+    func getAsset(id: String) async throws(InMemoryAssetRepositoryError) -> Asset {
+        throw InMemoryAssetRepositoryError.notFound
     }
 }
 
