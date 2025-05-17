@@ -5,13 +5,13 @@ import Testing
 @Suite
 struct AssetMapperTests {
     
-    private let rateDataModel = [RateDataModel(
+    private let rateDataModel = RateDataModel(
         id: "euro",
         symbol: "EUR",
         currencySymbol: "€",
         type: "fiat",
         rateUsd: "1.1026878015161958"
-    )]
+    )
     
     @Test
     func mapToDomain_withValidData_returnsAsset() throws {
@@ -30,7 +30,7 @@ struct AssetMapperTests {
             explorer: nil
         )
         
-        let asset = try? AssetMapper.mapToAssets(assetsDataModels: [dataModel], ratesDataModels: rateDataModel).first
+        let asset = AssetMapper.mapToDomain(assetsDataModels: [dataModel], euroRateDataModel: rateDataModel).first
         
         #expect(asset != nil)
         #expect(asset?.id == "bitcoin")
@@ -58,7 +58,7 @@ struct AssetMapperTests {
             explorer: "https://example.com"
         )
         
-        let result = try AssetMapper.mapToAssets(assetsDataModels: [invalid], ratesDataModels: rateDataModel)
+        let result = AssetMapper.mapToDomain(assetsDataModels: [invalid], euroRateDataModel: rateDataModel)
         #expect(result.isEmpty)
     }
     
@@ -94,10 +94,7 @@ struct AssetMapperTests {
             explorer: nil
         )
         
-        let result = try AssetMapper.mapToAssets(
-            assetsDataModels: [valid, invalid],
-            ratesDataModels: rateDataModel
-        )
+        let result = AssetMapper.mapToDomain(assetsDataModels: [valid, invalid], euroRateDataModel: rateDataModel)
         #expect(result.count == 1)
         #expect(result.first?.id == "solana")
     }

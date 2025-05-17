@@ -1,12 +1,14 @@
 import Foundation
 
-struct GetRatesEndpoint {}
+struct GetRatesEndpoint {
+    let slug: String
+}
 
 extension GetRatesEndpoint: Endpoint {
     
-    typealias Response = ListDataModel<RateDataModel>
+    typealias Response = DataModel<RateDataModel>
     
-    var path: String { "v3/rates" }
+    var path: String { "v3/rates/\(slug)" }
     var method: String { "GET" }
     var queryItems: [URLQueryItem]? { nil }
     var headers: [String : String]? { nil }

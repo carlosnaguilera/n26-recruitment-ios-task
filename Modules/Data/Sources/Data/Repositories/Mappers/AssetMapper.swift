@@ -3,23 +3,8 @@ import Foundation
 
 struct AssetMapper {
     
-    enum Error: Swift.Error {
-        case noEuroRate
-    }
-    
-    static func mapToAssets(assetsDataModels: [AssetDataModel], ratesDataModels: [RateDataModel]) throws(Error)-> [Asset] {
+    static func mapToDomain(assetsDataModels: [AssetDataModel], euroRateDataModel: RateDataModel) -> [Asset] {
         
-        guard let euroRateDataModel = ratesDataModels.first(where: { $0.id == "euro" }) else {
-            throw Error.noEuroRate
-        }
-        
-        return AssetMapper
-            .mapToDomain(
-                assetsDataModels: assetsDataModels,
-                euroRateDataModel: euroRateDataModel)
-    }
-    
-    private static func mapToDomain(assetsDataModels: [AssetDataModel], euroRateDataModel: RateDataModel) -> [Asset] {
         assetsDataModels.compactMap { mapToDomain(assetDataModel: $0, euroRateDataModel: euroRateDataModel) }
     }
     
