@@ -2,7 +2,7 @@ import Foundation
 
 protocol APIClient: Sendable {
     func getAssets(limit: Int) async throws -> [AssetDataModel]
-    func getRates() async throws -> [RateDataModel]
+    func getRates(slug: String) async throws -> RateDataModel
 }
 
 final class CoinCapAPIClient: APIClient {
@@ -25,8 +25,8 @@ final class CoinCapAPIClient: APIClient {
         return getAssetsResponse.data
     }
     
-    func getRates() async throws -> [RateDataModel] {
-        let endpoint = GetRatesEndpoint()
+    func getRates(slug: String) async throws -> RateDataModel {
+        let endpoint = GetRatesEndpoint(slug: slug)
         let getRatesResponse = try await performRequest(for: endpoint)
         return getRatesResponse.data
     }
@@ -42,7 +42,6 @@ final class CoinCapAPIClient: APIClient {
     }
     
     private func buildRequest<E: Endpoint>(from endpoint: E) throws -> URLRequest {
-        
         
         guard let baseURL = URL(string: baseURLString),
               var components = URLComponents(url: baseURL.appendingPathComponent(endpoint.path),

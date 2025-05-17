@@ -11,8 +11,10 @@ public struct RemoteAssetService: RemoteAssetRepository, Sendable {
     private let inMemoryCache: InMemoryAssetRepository
     
     public init() {
-        // As we are having trouble with real CoinCap API usage we use a mock one
+        // As we are having trouble with real CoinCap API usage we use a mock one while developing
+        // replace with production apiclient before sending
         self.init(apiClient: CoinCapAPIClient(downloader: MockDataDownloader()))
+//        self.init(apiClient: CoinCapAPIClient())
     }
     
     init(apiClient: APIClient, inMemoryCache: InMemoryAssetRepository = InMemoryAssetService.shared) {
@@ -22,11 +24,11 @@ public struct RemoteAssetService: RemoteAssetRepository, Sendable {
     
     public func fetchAllAssets() async throws -> [Asset] {
         
-        async let ratesDataModels = try apiClient.getRates()
-        async let assetsDataModels = try apiClient.getAssets(limit: 2000)
+        async let euroRateDataModel = try apiClient.getRates(slug: "euro")
+        async let assetsDataModels = try apiClient.getAssets(limit: 100)
         
-        let assets = try await AssetMapper.mapToAssets(assetsDataModels: assetsDataModels,
-                                                       ratesDataModels: ratesDataModels)
+        let assets = try await AssetMapper.mapToDomain(assetsDataModels: assetsDataModels,
+                                                       euroRateDataModel: euroRateDataModel)
         await inMemoryCache.save(assets)
         return assets
     }

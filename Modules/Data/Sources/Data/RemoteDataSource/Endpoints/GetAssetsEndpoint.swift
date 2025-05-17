@@ -6,11 +6,11 @@ struct GetAssetsEndpoint {
 
 extension GetAssetsEndpoint: Endpoint {
     
-    typealias Response = ListDataModel<AssetDataModel>
+    typealias Response = APIListResponse<AssetDataModel>
     
     var path: String { "/v3/assets" }
     var method: String { "GET" }
-    var queryItems: [URLQueryItem]? { [ URLQueryItem(name: "limit", value: "\(limit)")] }
+    var queryItems: [URLQueryItem]? { [URLQueryItem(name: "limit", value: "\(limit)")] }
     var headers: [String: String]? { nil }
     
     func body() throws -> Data? { nil }

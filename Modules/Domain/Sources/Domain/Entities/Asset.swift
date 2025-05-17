@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Asset: Sendable, Identifiable {
+public struct Asset: Sendable, Identifiable, Equatable {
     
     public let id: String
     public let name: String
