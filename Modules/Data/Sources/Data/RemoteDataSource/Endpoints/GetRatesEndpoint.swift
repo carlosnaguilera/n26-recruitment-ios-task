@@ -6,7 +6,7 @@ struct GetRatesEndpoint {
 
 extension GetRatesEndpoint: Endpoint {
     
-    typealias Response = DataModel<RateDataModel>
+    typealias Response = APISingleResponse<RateDataModel>
     
     var path: String { "v3/rates/\(slug)" }
     var method: String { "GET" }

@@ -6,7 +6,7 @@ struct GetAssetsEndpoint {
 
 extension GetAssetsEndpoint: Endpoint {
     
-    typealias Response = ListDataModel<AssetDataModel>
+    typealias Response = APIListResponse<AssetDataModel>
     
     var path: String { "/v3/assets" }
     var method: String { "GET" }
