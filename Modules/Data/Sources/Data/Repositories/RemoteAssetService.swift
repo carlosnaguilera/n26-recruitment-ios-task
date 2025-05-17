@@ -23,7 +23,7 @@ public struct RemoteAssetService: RemoteAssetRepository, Sendable {
     public func fetchAllAssets() async throws -> [Asset] {
         
         async let ratesDataModels = try apiClient.getRates()
-        async let assetsDataModels = try apiClient.getAssets(limit: 2000)
+        async let assetsDataModels = try apiClient.getAssets(limit: 100)
         
         let assets = try await AssetMapper.mapToAssets(assetsDataModels: assetsDataModels,
                                                        ratesDataModels: ratesDataModels)
