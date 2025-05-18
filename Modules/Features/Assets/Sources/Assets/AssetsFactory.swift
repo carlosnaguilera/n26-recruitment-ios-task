@@ -12,7 +12,13 @@ public protocol AssetsBuilding {
 public struct AssetsFactory: AssetsBuilding {
     
     public static func makeAssetsListView() -> UIViewController {
-        let assetsRootView = AssetsList()
+        
+        let getAssets = GetAssets(
+            remoteRepository: RemoteAssetService(),
+            inMemoryRepository: InMemoryAssetService()
+        ).useCase
+        let viewModel = AssetsList.ViewModel(getAssets: getAssets)
+        let assetsRootView = AssetsList(viewModel: viewModel)
             .environment(\.theme, DefaultTheme())
         let viewController = UIHostingController(rootView: assetsRootView)
         return viewController
