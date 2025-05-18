@@ -50,33 +50,6 @@ public struct AssetsList: View {
 }
 
 #Preview {
-    let getAssets: UseCase.GetAssets = { _ in
-        [
-            Asset(
-                id: "1",
-                name: "Bitcoin",
-                symbol: "BTC",
-                priceChange: 3.5,
-                price: 50000,
-                marketCap: 900_000_000_000
-            ),
-            Asset(
-                id: "2",
-                name: "Ethereum",
-                symbol: "ETH",
-                priceChange: 2.1,
-                price: 3500,
-                marketCap: 400_000_000_000
-            ),
-            Asset(
-                id: "3",
-                name: "Ripple",
-                symbol: "XRP",
-                priceChange: -1.2,
-                price: 1.2,
-                marketCap: 50_000_000_000
-            )
-        ]
-    }
+    let getAssets: UseCase.GetAssets = { _ in Asset.mockAssets }
     AssetsList(viewModel: AssetsList.ViewModel(getAssets: getAssets))
 }
