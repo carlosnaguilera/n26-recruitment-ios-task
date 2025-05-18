@@ -5,17 +5,17 @@ public struct Asset: Sendable, Identifiable, Equatable {
     public let id: String
     public let name: String
     public let symbol: String
-    public let priceChange: Double
-    public let price: Double
-    public let marketCap: Double
+    public let priceChange: Decimal
+    public let price: Decimal
+    public let marketCap: Decimal
     
     public init(
         id: String,
         name: String,
         symbol: String,
-        priceChange: Double,
-        price: Double,
-        marketCap: Double
+        priceChange: Decimal,
+        price: Decimal,
+        marketCap: Decimal
     ) {
         self.id = id
         self.name = name
