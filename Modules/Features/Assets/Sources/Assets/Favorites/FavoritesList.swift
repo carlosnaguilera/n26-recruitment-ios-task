@@ -1,3 +1,4 @@
+import Domain
 import SwiftUI
 
 struct FavoritesList: View {
@@ -8,7 +9,7 @@ struct FavoritesList: View {
     
     @StateObject private var viewModel: ViewModel
     
-    public init(viewModel: ViewModel) {
+    init(viewModel: ViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
@@ -27,4 +28,12 @@ struct FavoritesList: View {
             FavoritesListItem(state: itemState)
         }
     }
+}
+
+#Preview {
+    
+    let getFavorites: UseCase.GetFavorites = { _ in Array(Asset.mockAssets.prefix(3))
+    }
+    let viewModel = FavoritesList.ViewModel(getFavorites: getFavorites)
+    FavoritesList(viewModel: viewModel)
 }

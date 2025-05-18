@@ -6,13 +6,13 @@ import Testing
 @testable import Assets
 
 @MainActor
-struct AssetListTests {
+struct FavoritesListTests {
     
     @Test func snapshotView() async throws {
         
-        let viewModel = AssetsList.ViewModel(getAssets: { _ in Asset.mockAssets })
+        let viewModel = FavoritesList.ViewModel(getFavorites: { _ in Array(Asset.mockAssets.prefix(5)) })
         try await viewModel.onAppear()
-        let view = AssetsList(viewModel: viewModel)
+        let view = FavoritesList(viewModel: viewModel)
         
         withSnapshotTesting(record: .never) {
             assertSnapshot(of: view, as: .image(layout: .device(config: .iPhone13)))

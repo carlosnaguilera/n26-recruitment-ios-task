@@ -8,17 +8,9 @@ struct AssetListItemRendererTests {
     @Test
     func formatsCorrectlyInEnglishUSLocale() throws {
         
-        let asset = Asset(
-            id: "btc",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceChange: -2.867438904563889,
-            price: 1234.56,
-            marketCap: 1_000_000_000
-        )
         let locale = Locale(identifier: "en_US")
 
-        let state = AssetsRenderer.renderToAssetsListItem(asset, locale: locale)
+        let state = AssetsRenderer.renderToAssetsListItem(Asset.mockBitcoin, locale: locale)
 
         #expect(state.name == "Bitcoin")
         #expect(state.symbol == "BTC")
@@ -30,17 +22,9 @@ struct AssetListItemRendererTests {
     @Test
     func formatsCorrectlyInSpanishLocale() throws {
         
-        let asset = Asset(
-            id: "btc",
-            name: "Bitcoin",
-            symbol: "BTC",
-            priceChange: -2.867438904563889,
-            price: 1234.56,
-            marketCap: 1_000_000_000
-        )
         let locale = Locale(identifier: "es_ES")
 
-        let viewModel = AssetsRenderer.renderToAssetsListItem(asset, locale: locale)
+        let viewModel = AssetsRenderer.renderToAssetsListItem(Asset.mockBitcoin, locale: locale)
 
         #expect(viewModel.priceChange == "-2,87 %")
         #expect(viewModel.price == "1234,56 €")

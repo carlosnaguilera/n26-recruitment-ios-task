@@ -18,12 +18,7 @@ extension AssetsList {
         private var bestAssets: [Asset] = []
         private var worstAssets: [Asset] = []
         
-        init(
-            getAssets: @escaping UseCase.GetAssets = GetAssets(
-                remoteRepository: RemoteAssetService(),
-                inMemoryRepository: InMemoryAssetService()
-            ).useCase
-        ) {
+        init(getAssets: @escaping UseCase.GetAssets) {
             self.getAssets = getAssets
         }
         

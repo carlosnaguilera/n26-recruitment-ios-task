@@ -11,10 +11,6 @@ public struct AssetsList: View {
     
     @StateObject private var viewModel: ViewModel
     
-    public init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-    }
-    
     init(viewModel: ViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
@@ -54,5 +50,6 @@ public struct AssetsList: View {
 }
 
 #Preview {
-    AssetsList()
+    let getAssets: UseCase.GetAssets = { _ in Asset.mockAssets }
+    AssetsList(viewModel: AssetsList.ViewModel(getAssets: getAssets))
 }
