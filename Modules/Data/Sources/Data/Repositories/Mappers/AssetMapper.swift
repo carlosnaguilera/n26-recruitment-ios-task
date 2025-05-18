@@ -22,8 +22,8 @@ struct AssetMapper {
             name: assetDataModel.name,
             symbol: assetDataModel.symbol,
             priceChange: change,
-            price: priceUsd * exchangeRate,
-            marketCap: marketCap * exchangeRate
+            price: priceUsd / exchangeRate,
+            marketCap: marketCap / exchangeRate
         )
     }
 }
