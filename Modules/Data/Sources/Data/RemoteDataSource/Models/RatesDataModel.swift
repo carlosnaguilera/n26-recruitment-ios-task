@@ -9,7 +9,7 @@ struct RateDataModel: Decodable {
 }
 
 extension RateDataModel {
-    var rateUsdDouble: Double? {
-        Double(rateUsd)
+    var rateUsdDecimal: Decimal? {
+        Decimal.fromPOSIX(rateUsd)
     }
 }

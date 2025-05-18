@@ -10,10 +10,10 @@ struct AssetMapper {
     
     private static func mapToDomain(assetDataModel: AssetDataModel, euroRateDataModel: RateDataModel) -> Asset? {
         
-        guard let exchangeRate = euroRateDataModel.rateUsdDouble,
-              let priceUsd = assetDataModel.priceDouble,
-              let change = assetDataModel.changePercentDouble,
-                let marketCap = assetDataModel.marketCapDouble else {
+        guard let exchangeRate = euroRateDataModel.rateUsdDecimal,
+              let priceUsd = assetDataModel.priceDecimal,
+              let change = assetDataModel.changePercentDecimal,
+                let marketCap = assetDataModel.marketCapDecimal else {
                   return nil
               }
         

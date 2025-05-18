@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 
 @testable import Data
@@ -36,9 +37,9 @@ struct AssetMapperTests {
         #expect(asset?.id == "bitcoin")
         #expect(asset?.name == "Bitcoin")
         #expect(asset?.symbol == "BTC")
-        #expect(asset?.price == 46449.014472777395)
+        #expect(asset?.price == Decimal.fromPOSIX("38200.703718749997473978466597"))
         #expect(asset?.priceChange == -2.56)
-        #expect(asset?.marketCap == 1323225362.3707788)
+        #expect(asset?.marketCap == Decimal.fromPOSIX("1088250000.45343742803946872001645"))
     }
     
     @Test
