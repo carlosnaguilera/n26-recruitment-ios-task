@@ -47,7 +47,16 @@ public struct AssetsFactory: AssetsBuilding {
     
     static func makeAssetDetailsView(assetId: String) -> AssetDetailsView {
         
-        let viewModel = AssetDetailsView.ViewModel(assetId: assetId)
+        let getAsset = GetAsset(repository: InMemoryAssetService.shared).useCase
+        let isAssetWithIdFavorite = IsAssetWithIdFavorite(repository: LocalFavoriteService()).useCase
+        let setFavorite = SetAssetFavoriteStatus(repository: LocalFavoriteService()).useCase
+        
+        let viewModel = AssetDetailsView.ViewModel(
+            assetId: assetId,
+            getAsset: getAsset,
+            isAssetWithIdFavorite: isAssetWithIdFavorite,
+            setFavorite: setFavorite
+        )
         return AssetDetailsView(viewModel: viewModel)
     }
 }
