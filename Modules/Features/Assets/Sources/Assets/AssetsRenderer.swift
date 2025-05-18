@@ -23,7 +23,7 @@ struct AssetsRenderer {
                 id: asset.id,
                 name: asset.name,
                 symbol: asset.symbol,
-                marketCap: renderMarketCap(asset.marketCap),
+                marketCap: renderMarketCap(asset.marketCap, locale: locale),
                 price: renderPrice(asset.price, locale: locale)
             )
     }
@@ -33,8 +33,8 @@ struct AssetsRenderer {
         AssetDetailsView.AssetDetailsContent(
             name: asset.name,
             symbol: asset.symbol,
-            marketCap: renderMarketCap(asset.marketCap),
-            price: renderPrice(asset.price),
+            marketCap: renderMarketCap(asset.marketCap, locale: locale),
+            price: renderPrice(asset.price, locale: locale),
             isFavorite: isFavorite
         )
     }
@@ -43,12 +43,13 @@ struct AssetsRenderer {
         price.formatted(.currency(code: "EUR").locale(locale))
     }
     
-    private static func renderMarketCap(_ marketCap: Decimal) -> String {
+    private static func renderMarketCap(_ marketCap: Decimal, locale: Locale) -> String {
         if #available(iOS 18, *) {
             return marketCap.formatted(
                 .currency(code: "EUR")
                 .notation(.compactName)
                 .precision(.fractionLength(2))
+                .locale(locale)
             )
         } else {
             let formatter = NumberFormatter()
@@ -56,6 +57,7 @@ struct AssetsRenderer {
             formatter.currencyCode = "EUR"
             formatter.maximumFractionDigits = 2
             formatter.minimumFractionDigits = 0
+            formatter.locale = locale
             
             let billion = Decimal(1_000_000_000)
             let million = Decimal(1_000_000)
