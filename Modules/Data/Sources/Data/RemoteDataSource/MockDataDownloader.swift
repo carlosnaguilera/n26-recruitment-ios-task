@@ -14,7 +14,7 @@ struct MockDataDownloader: HTTPDataDownloader {
             switch urlComponents.path {
             case "/v3/assets":
                 self = .assetsList
-            case "/v3/rates":
+            case "/v3/rates/euro":
                 self = .rates
             default:
                 return nil
