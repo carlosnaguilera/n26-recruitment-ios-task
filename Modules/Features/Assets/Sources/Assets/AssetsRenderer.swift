@@ -23,7 +23,7 @@ struct AssetsRenderer {
                 id: asset.id,
                 name: asset.name,
                 symbol: asset.symbol,
-                marketCap: renderMarketCap(asset.marketCap),
+                marketCap: renderMarketCap(asset.marketCap, locale: locale),
                 price: renderPrice(asset.price, locale: locale)
             )
     }
@@ -33,39 +33,48 @@ struct AssetsRenderer {
         AssetDetailsView.AssetDetailsContent(
             name: asset.name,
             symbol: asset.symbol,
-            marketCap: renderMarketCap(asset.marketCap),
-            price: renderPrice(asset.price),
+            marketCap: renderMarketCap(asset.marketCap, locale: locale),
+            price: renderPrice(asset.price, locale: locale),
             isFavorite: isFavorite
         )
     }
     
-    private static func renderPrice(_ price: Double, locale: Locale = .current) -> String {
+    private static func renderPrice(_ price: Decimal, locale: Locale = .current) -> String {
         price.formatted(.currency(code: "EUR").locale(locale))
     }
     
-    private static func renderMarketCap(_ marketCap: Double) -> String {
-        
+    private static func renderMarketCap(_ marketCap: Decimal, locale: Locale) -> String {
         if #available(iOS 18, *) {
             return marketCap.formatted(
                 .currency(code: "EUR")
                 .notation(.compactName)
-                .precision(.fractionLength(2)))
+                .precision(.fractionLength(2))
+                .locale(locale)
+            )
         } else {
             let formatter = NumberFormatter()
             formatter.numberStyle = .currency
             formatter.currencyCode = "EUR"
             formatter.maximumFractionDigits = 2
             formatter.minimumFractionDigits = 0
+            formatter.locale = locale
+            
+            let billion = Decimal(1_000_000_000)
+            let million = Decimal(1_000_000)
+            let thousand = Decimal(1_000)
             
             switch marketCap {
-            case let x where x >= 1_000_000_000:
-                return "\(formatter.string(from: NSNumber(value: x / 1_000_000_000)) ?? "")B"
-            case let x where x >= 1_000_000:
-                return "\(formatter.string(from: NSNumber(value: x / 1_000_000)) ?? "")M"
-            case let x where x >= 1_000:
-                return "\(formatter.string(from: NSNumber(value: x / 1_000)) ?? "")K"
+            case let x where x >= billion:
+                let value = (x / billion) as NSDecimalNumber
+                return "\(formatter.string(from: value) ?? "")B"
+            case let x where x >= million:
+                let value = (x / million) as NSDecimalNumber
+                return "\(formatter.string(from: value) ?? "")M"
+            case let x where x >= thousand:
+                let value = (x / thousand) as NSDecimalNumber
+                return "\(formatter.string(from: value) ?? "")K"
             default:
-                return "\(formatter.string(from: NSNumber(value: marketCap)) ?? "")"
+                return formatter.string(from: marketCap as NSDecimalNumber) ?? ""
             }
         }
     }

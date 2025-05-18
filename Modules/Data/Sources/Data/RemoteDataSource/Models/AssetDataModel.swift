@@ -16,13 +16,13 @@ public struct AssetDataModel: Decodable, Sendable {
 }
 
 extension AssetDataModel {
-    var priceDouble: Double? {
-        priceUsd.flatMap(Double.init)
+    var priceDecimal: Decimal? {
+        priceUsd.flatMap(Decimal.fromPOSIX)
     }
-    var changePercentDouble: Double? {
-        changePercent24Hr.flatMap(Double.init)
+    var changePercentDecimal: Decimal? {
+        changePercent24Hr.flatMap(Decimal.fromPOSIX)
     }
-    var marketCapDouble: Double? {
-        marketCapUsd.flatMap(Double.init)
+    var marketCapDecimal: Decimal? {
+        marketCapUsd.flatMap(Decimal.fromPOSIX)
     }
 }
