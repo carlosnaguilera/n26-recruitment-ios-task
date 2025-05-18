@@ -8,7 +8,7 @@ struct FavoritesList: View {
     
     @StateObject private var viewModel: ViewModel
     
-    public init(viewModel: ViewModel) {
+    init(viewModel: ViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
     
