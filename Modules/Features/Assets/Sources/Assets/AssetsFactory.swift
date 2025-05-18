@@ -40,8 +40,7 @@ public struct AssetsFactory: AssetsBuilding {
         
         let view = FavoritesList(viewModel: viewModel)
             .environment(\.theme, DefaultTheme())
-        let viewController = UIHostingController(rootView: view
-        )
+        let viewController = UIHostingController(rootView: view)
         return viewController
     }
     
