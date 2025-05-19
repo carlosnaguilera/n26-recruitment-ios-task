@@ -15,7 +15,7 @@ public enum AssetsFactory: AssetsBuilding {
         
         let getAssets = GetAssets(
             remoteRepository: RemoteAssetService(),
-            inMemoryRepository: InMemoryAssetService()
+            inMemoryRepository: InMemoryAssetService.shared
         ).useCase
         let viewModel = AssetsList.ViewModel(getAssets: getAssets)
         let assetsRootView = AssetsList(viewModel: viewModel)
@@ -28,7 +28,7 @@ public enum AssetsFactory: AssetsBuilding {
         
         let getAssets: UseCase.GetAssets = GetAssets(
             remoteRepository: RemoteAssetService(),
-            inMemoryRepository: InMemoryAssetService()
+            inMemoryRepository: InMemoryAssetService.shared
         ).useCase
         
         let getFavorites: UseCase.GetFavorites = GetFavorites(
