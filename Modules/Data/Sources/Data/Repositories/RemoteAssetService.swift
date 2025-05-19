@@ -11,10 +11,7 @@ public struct RemoteAssetService: RemoteAssetRepository, Sendable {
     private let inMemoryCache: InMemoryAssetRepository
     
     public init() {
-        // As we are having trouble with real CoinCap API usage we use a mock one while developing
-        // replace with production apiclient before sending
-        self.init(apiClient: CoinCapAPIClient(downloader: MockDataDownloader()))
-//        self.init(apiClient: CoinCapAPIClient())
+        self.init(apiClient: CoinCapAPIClient())
     }
     
     init(apiClient: APIClient, inMemoryCache: InMemoryAssetRepository = InMemoryAssetService.shared) {
