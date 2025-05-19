@@ -9,7 +9,7 @@ public protocol AssetsBuilding {
     static func makeAssetsListView() -> UIViewController
 }
 
-public struct AssetsFactory: AssetsBuilding {
+public enum AssetsFactory: AssetsBuilding {
     
     public static func makeAssetsListView() -> UIViewController {
         
