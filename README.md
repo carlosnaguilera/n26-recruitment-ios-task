@@ -34,6 +34,7 @@ To respect the CoinCap API's limited monthly request quota, the app fetches only
 - ✅ Localized formatting for prices and percentages
 - ✅ Lightweight, with no third-party libraries (just SnapshotTesting for snapshot unit tests)
 - ✅ iOS 15+ support
+- ✅ Works on iPhone and iPad, supporting portrait and landscape orientations
 
 ## 🧪 Notes
 
