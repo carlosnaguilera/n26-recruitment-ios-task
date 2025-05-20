@@ -55,12 +55,22 @@ struct AssetDetailsView: View {
 }
 
 #Preview {
-
-    let viewModel = AssetDetailsView.ViewModel(assetId: "", initialState: .loaded(.init(name: "Four",
-                                                 symbol: "FORM",
-                                                 marketCap: "€854,06M",
-                                                 price: "2,24€",
-                                                 isFavorite: false
-                                                )))
+    let getAsset: UseCase.GetAsset = { _ in
+        Asset(
+            id: "1",
+            name: "Bitcoin",
+            symbol: "BTC",
+            priceChange: 3.5,
+            price: 50000,
+            marketCap: 900_000_000_000
+        )}
+    let isFavorite: UseCase.IsAssetWithIdFavorite = { _ in false }
+    let setFavorite: UseCase.SetAssetFavoriteStatus = { _, _ in }
+    let viewModel = AssetDetailsView.ViewModel(
+        assetId: "1",
+        getAsset: getAsset,
+        isAssetWithIdFavorite: isFavorite,
+        setFavorite: setFavorite
+    )
     AssetDetailsView(viewModel: viewModel)
 }

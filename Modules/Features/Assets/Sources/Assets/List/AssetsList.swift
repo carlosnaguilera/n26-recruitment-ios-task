@@ -11,22 +11,15 @@ public struct AssetsList: View {
     
     @StateObject private var viewModel: ViewModel
     
-    public init() {
-        _viewModel = StateObject(wrappedValue: ViewModel())
-    }
-    
     init(viewModel: ViewModel) {
         _viewModel = .init(wrappedValue: viewModel)
     }
     
     public var body: some View {
-        NavigationStack {
+        NavigationView {
             StatefulView(state: viewModel.state,
                          retryAction: { Task { try? await viewModel.onAppear() } },
                          content: assetsList)
-            .navigationDestination(for: AssetListItem.State.self) { selection in
-                AssetsFactory.makeAssetDetailsView(assetId: selection.id)
-            }
             .listStyle(.plain)
             .navigationTitle(Strings.title)
             .toolbar {
@@ -40,7 +33,7 @@ public struct AssetsList: View {
     
     private func assetsList(_ state: [AssetListItem.State]) -> some View {
         List(state) { itemState in
-            NavigationLink(value: itemState) {
+            NavigationLink(destination: AssetsFactory.makeAssetDetailsView(assetId: itemState.id)) {
                 AssetListItem(state: itemState)
             }
         }
@@ -57,5 +50,6 @@ public struct AssetsList: View {
 }
 
 #Preview {
-    AssetsList()
+    let getAssets: UseCase.GetAssets = { _ in Asset.mockAssets }
+    AssetsList(viewModel: AssetsList.ViewModel(getAssets: getAssets))
 }

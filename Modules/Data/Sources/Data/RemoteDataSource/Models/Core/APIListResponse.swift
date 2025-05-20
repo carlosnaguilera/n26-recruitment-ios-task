@@ -1,6 +1,6 @@
 import Foundation
 
-struct ListDataModel<T: Decodable>: Decodable {
+struct APIListResponse<T: Decodable>: Decodable {
     let data: [T]
     let timestamp: TimeInterval
 }

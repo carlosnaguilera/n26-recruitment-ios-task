@@ -1,3 +1,4 @@
+import Foundation
 import Testing
 
 @testable import Data
@@ -5,13 +6,13 @@ import Testing
 @Suite
 struct AssetMapperTests {
     
-    private let rateDataModel = [RateDataModel(
+    private let rateDataModel = RateDataModel(
         id: "euro",
         symbol: "EUR",
         currencySymbol: "€",
         type: "fiat",
         rateUsd: "1.1026878015161958"
-    )]
+    )
     
     @Test
     func mapToDomain_withValidData_returnsAsset() throws {
@@ -30,15 +31,15 @@ struct AssetMapperTests {
             explorer: nil
         )
         
-        let asset = try? AssetMapper.mapToAssets(assetsDataModels: [dataModel], ratesDataModels: rateDataModel).first
+        let asset = AssetMapper.mapToDomain(assetsDataModels: [dataModel], euroRateDataModel: rateDataModel).first
         
         #expect(asset != nil)
         #expect(asset?.id == "bitcoin")
         #expect(asset?.name == "Bitcoin")
         #expect(asset?.symbol == "BTC")
-        #expect(asset?.price == 46449.014472777395)
+        #expect(asset?.price == Decimal.fromPOSIX("38200.703718749997473978466597"))
         #expect(asset?.priceChange == -2.56)
-        #expect(asset?.marketCap == 1323225362.3707788)
+        #expect(asset?.marketCap == Decimal.fromPOSIX("1088250000.45343742803946872001645"))
     }
     
     @Test
@@ -58,7 +59,7 @@ struct AssetMapperTests {
             explorer: "https://example.com"
         )
         
-        let result = try AssetMapper.mapToAssets(assetsDataModels: [invalid], ratesDataModels: rateDataModel)
+        let result = AssetMapper.mapToDomain(assetsDataModels: [invalid], euroRateDataModel: rateDataModel)
         #expect(result.isEmpty)
     }
     
@@ -94,10 +95,7 @@ struct AssetMapperTests {
             explorer: nil
         )
         
-        let result = try AssetMapper.mapToAssets(
-            assetsDataModels: [valid, invalid],
-            ratesDataModels: rateDataModel
-        )
+        let result = AssetMapper.mapToDomain(assetsDataModels: [valid, invalid], euroRateDataModel: rateDataModel)
         #expect(result.count == 1)
         #expect(result.first?.id == "solana")
     }

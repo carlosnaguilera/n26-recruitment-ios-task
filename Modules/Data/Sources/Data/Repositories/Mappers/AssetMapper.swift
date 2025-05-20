@@ -3,32 +3,17 @@ import Foundation
 
 struct AssetMapper {
     
-    enum Error: Swift.Error {
-        case noEuroRate
-    }
-    
-    static func mapToAssets(assetsDataModels: [AssetDataModel], ratesDataModels: [RateDataModel]) throws(Error)-> [Asset] {
+    static func mapToDomain(assetsDataModels: [AssetDataModel], euroRateDataModel: RateDataModel) -> [Asset] {
         
-        guard let euroRateDataModel = ratesDataModels.first(where: { $0.id == "euro" }) else {
-            throw Error.noEuroRate
-        }
-        
-        return AssetMapper
-            .mapToDomain(
-                assetsDataModels: assetsDataModels,
-                euroRateDataModel: euroRateDataModel)
-    }
-    
-    private static func mapToDomain(assetsDataModels: [AssetDataModel], euroRateDataModel: RateDataModel) -> [Asset] {
         assetsDataModels.compactMap { mapToDomain(assetDataModel: $0, euroRateDataModel: euroRateDataModel) }
     }
     
     private static func mapToDomain(assetDataModel: AssetDataModel, euroRateDataModel: RateDataModel) -> Asset? {
         
-        guard let exchangeRate = euroRateDataModel.rateUsdDouble,
-              let priceUsd = assetDataModel.priceDouble,
-              let change = assetDataModel.changePercentDouble,
-                let marketCap = assetDataModel.marketCapDouble else {
+        guard let exchangeRate = euroRateDataModel.rateUsdDecimal,
+              let priceUsd = assetDataModel.priceDecimal,
+              let change = assetDataModel.changePercentDecimal,
+                let marketCap = assetDataModel.marketCapDecimal else {
                   return nil
               }
         
@@ -37,8 +22,8 @@ struct AssetMapper {
             name: assetDataModel.name,
             symbol: assetDataModel.symbol,
             priceChange: change,
-            price: priceUsd * exchangeRate,
-            marketCap: marketCap * exchangeRate
+            price: priceUsd / exchangeRate,
+            marketCap: marketCap / exchangeRate
         )
     }
 }

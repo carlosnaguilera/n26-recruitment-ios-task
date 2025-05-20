@@ -1,12 +1,10 @@
 {
-    "data": [
-        {
-            "id": "euro",
-            "symbol": "EUR",
-            "currencySymbol": "€",
-            "type": "fiat",
-            "rateUsd": "1.1026878015161958"
-        }
-    ],
-    "timestamp": 1744193924207
+  "data": {
+    "id": "euro",
+    "symbol": "EUR",
+    "currencySymbol": "€",
+    "type": "fiat",
+    "rateUsd": "1.1162072171726247"
+  },
+  "timestamp": 1747568068932
 }

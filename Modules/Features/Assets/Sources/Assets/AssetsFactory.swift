@@ -9,10 +9,16 @@ public protocol AssetsBuilding {
     static func makeAssetsListView() -> UIViewController
 }
 
-public struct AssetsFactory: AssetsBuilding {
+public enum AssetsFactory: AssetsBuilding {
     
     public static func makeAssetsListView() -> UIViewController {
-        let assetsRootView = AssetsList()
+        
+        let getAssets = GetAssets(
+            remoteRepository: RemoteAssetService(),
+            inMemoryRepository: InMemoryAssetService.shared
+        ).useCase
+        let viewModel = AssetsList.ViewModel(getAssets: getAssets)
+        let assetsRootView = AssetsList(viewModel: viewModel)
             .environment(\.theme, DefaultTheme())
         let viewController = UIHostingController(rootView: assetsRootView)
         return viewController
@@ -22,7 +28,7 @@ public struct AssetsFactory: AssetsBuilding {
         
         let getAssets: UseCase.GetAssets = GetAssets(
             remoteRepository: RemoteAssetService(),
-            inMemoryRepository: InMemoryAssetService()
+            inMemoryRepository: InMemoryAssetService.shared
         ).useCase
         
         let getFavorites: UseCase.GetFavorites = GetFavorites(
@@ -34,14 +40,22 @@ public struct AssetsFactory: AssetsBuilding {
         
         let view = FavoritesList(viewModel: viewModel)
             .environment(\.theme, DefaultTheme())
-        let viewController = UIHostingController(rootView: view
-        )
+        let viewController = UIHostingController(rootView: view)
         return viewController
     }
     
     static func makeAssetDetailsView(assetId: String) -> AssetDetailsView {
         
-        let viewModel = AssetDetailsView.ViewModel(assetId: assetId)
+        let getAsset = GetAsset(repository: InMemoryAssetService.shared).useCase
+        let isAssetWithIdFavorite = IsAssetWithIdFavorite(repository: LocalFavoriteService()).useCase
+        let setFavorite = SetAssetFavoriteStatus(repository: LocalFavoriteService()).useCase
+        
+        let viewModel = AssetDetailsView.ViewModel(
+            assetId: assetId,
+            getAsset: getAsset,
+            isAssetWithIdFavorite: isAssetWithIdFavorite,
+            setFavorite: setFavorite
+        )
         return AssetDetailsView(viewModel: viewModel)
     }
 }

@@ -16,11 +16,9 @@ extension AssetDetailsView {
         
         init(
             assetId: String,
-            getAsset: @escaping UseCase.GetAsset = GetAsset(repository: InMemoryAssetService.shared).useCase,
-            isAssetWithIdFavorite: @escaping UseCase.IsAssetWithIdFavorite = IsAssetWithIdFavorite(
-                repository: LocalFavoriteService()).useCase,
-            setFavorite: @escaping UseCase.SetAssetFavoriteStatus = SetAssetFavoriteStatus(
-                repository: LocalFavoriteService()).useCase,
+            getAsset: @escaping UseCase.GetAsset,
+            isAssetWithIdFavorite: @escaping UseCase.IsAssetWithIdFavorite,
+            setFavorite: @escaping UseCase.SetAssetFavoriteStatus,
             initialState: ViewState<AssetDetailsContent> = .loading
             )
         {
